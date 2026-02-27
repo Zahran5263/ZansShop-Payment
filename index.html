@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment · Zans Shop</title>
+    <!-- Font & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Pirata+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #8b1e1e;
+            background-image: radial-gradient(circle at 20% 30%, #c52828 0%, #6d0f0f 100%);
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            padding: 2rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background: rgba(255, 245, 215, 0.95);
+            backdrop-filter: blur(2px);
+            border-radius: 3rem 3rem 2rem 2rem;
+            box-shadow: 0 30px 50px rgba(0,0,0,0.5), 0 0 0 4px #f5c542 inset;
+            padding: 2.5rem 2rem;
+            position: relative;
+            border: 6px solid #d4a017;
+        }
+        .container::before {
+            content: "";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 180px;
+            height: 30px;
+            background: #c94b1f;
+            border-radius: 20px 20px 0 0;
+            border: 3px solid #a1300e;
+            border-bottom: none;
+        }
+        .container::after {
+            content: "⚓";
+            position: absolute;
+            top: -38px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            color: #ffd966;
+            text-shadow: 2px 2px 0 #b45f1b;
+        }
+        .luffy-welcome {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: #f0dbb4;
+            padding: 1rem 2rem;
+            border-radius: 60px;
+            margin-bottom: 2rem;
+            border: 4px solid #b57c1a;
+            box-shadow: 0 6px 0 #7a4f0e;
+        }
+        .luffy-welcome img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            filter: drop-shadow(2px 4px 4px rgba(0,0,0,0.3));
+        }
+        .luffy-text h2 {
+            font-family: 'Pirata One', cursive;
+            font-size: 2.2rem;
+            color: #a52a2a;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 0 #f5c542;
+        }
+        .luffy-text p {
+            font-size: 1rem;
+            color: #3b280b;
+            font-weight: 600;
+        }
+        h1 {
+            font-family: 'Pirata One', cursive;
+            font-size: 2.8rem;
+            color: #b13b3b;
+            text-shadow: 3px 3px 0 #f0c45a;
+            margin-bottom: 0.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .subhead {
+            color: #5b3e1a;
+            font-weight: 600;
+            margin-bottom: 2.5rem;
+            border-left: 6px solid #d4a017;
+            padding-left: 1.2rem;
+            font-size: 1.1rem;
+        }
+        .section-title {
+            font-family: 'Pirata One', cursive;
+            font-size: 1.8rem;
+            color: #9e2d2d;
+            margin: 2rem 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            border-bottom: 3px dashed #c98f2b;
+            padding-bottom: 0.3rem;
+        }
+        .section-title i {
+            color: #d4a017;
+            font-size: 2rem;
+        }
+        .grid-payment {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        .payment-card {
+            background: #fef9e7;
+            border-radius: 1.8rem;
+            padding: 1.5rem;
+            box-shadow: 0 8px 0 #b17e3a, 0 12px 20px -8px black;
+            border: 2px solid #e7b551;
+            transition: all 0.2s;
+        }
+        .payment-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 0 #b17e3a, 0 16px 24px -8px black;
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        .card-header i {
+            font-size: 2rem;
+            width: 2.4rem;
+            text-align: center;
+        }
+        .card-header h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #4e2f0b;
+        }
+        .account-number {
+            background: #ecd79b;
+            padding: 0.7rem 1rem;
+            border-radius: 1.5rem;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            font-size: 1rem;
+            border: 2px solid #b8862b;
+            margin: 0.8rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            word-break: break-word;
+        }
+        .copy-btn {
+            background: none;
+            border: none;
+            color: #8b4f0c;
+            cursor: pointer;
+            font-size: 1.3rem;
+            padding: 0 0.2rem;
+            transition: color 0.2s;
+        }
+        .copy-btn:hover {
+            color: #d48b1c;
+        }
+        .account-name {
+            color: #5c411a;
+            font-size: 0.9rem;
+            margin: 0.5rem 0 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .badge-coming {
+            background: #c0b094;
+            color: #2c1f0b;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            display: inline-block;
+            border: 1px solid #746142;
+        }
+        .badge-ready {
+            background: #2b6e2b;
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            display: inline-block;
+        }
+        .qris-area {
+            background: #ecd79b;
+            border-radius: 2rem;
+            padding: 1.8rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 2rem;
+            border: 4px solid #b57c1a;
+            margin: 1.5rem 0;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .qris-area:hover {
+            transform: scale(1.01);
+            background: #f5e5b9;
+        }
+        .qris-left {
+            flex: 1 1 200px;
+            text-align: center;
+        }
+        .qris-left img {
+            max-width: 180px;
+            width: 100%;
+            border-radius: 1.2rem;
+            box-shadow: 0 8px 0 #7a4f0e;
+            border: 3px solid white;
+        }
+        .qris-right {
+            flex: 2 1 300px;
+        }
+        .qris-right h3 {
+            font-size: 2rem;
+            font-family: 'Pirata One', cursive;
+            color: #8b1a1a;
+        }
+        .qris-right p {
+            color: #3f2e12;
+            margin: 0.5rem 0;
+        }
+        .click-hint {
+            background: #cf9f4a;
+            color: #221603;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            display: inline-block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: 1px solid #a5711e;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: #fdebba;
+            padding: 20px;
+            border-radius: 30px;
+            border: 6px solid #d4a017;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 30px black;
+        }
+        .modal-content img {
+            width: 100%;
+            border-radius: 20px;
+            border: 3px solid white;
+            margin-bottom: 15px;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        .modal-buttons button, .modal-buttons a {
+            background: #b13b3b;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 40px;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 1rem;
+            cursor: pointer;
+            border-bottom: 4px solid #691b1b;
+            transition: 0.1s;
+        }
+        .modal-buttons button:hover, .modal-buttons a:hover {
+            background: #9b2d2d;
+            transform: translateY(-2px);
+        }
+        .close {
+            color: #3e2b0b;
+            float: right;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .note-box {
+            margin-top: 2.5rem;
+            background: #f5d79c;
+            border-left: 8px solid #b3591b;
+            border-radius: 1.5rem;
+            padding: 1.5rem 2rem;
+            color: #4f340b;
+            font-weight: 600;
+            border: 2px solid #b87c2e;
+        }
+        .note-box p {
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .footer-note {
+            text-align: center;
+            margin-top: 2rem;
+            color: #5c471c;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Sambutan Luffy -->
+    <div class="luffy-welcome">
+        <img src="https://i.pinimg.com/originals/5f/6f/6f/5f6f6f3b3c3b3c3b3c3b3c3b3c3b3c3b.png" 
+             alt="Luffy melambai" 
+             onerror="this.src='https://via.placeholder.com/80x80?text=Luffy'">
+        <div class="luffy-text">
+            <h2>Welcome Zans Shop</h2>
+            <p>Ayo bayar cepat, kita lanjut petualangan! ☠️</p>
+        </div>
+    </div>
+
+    <h1>⚓ Zans Payment ⚓</h1>
+    <div class="subhead">Pilih harta karun (metode) pembayaran di bawah ini, transfer sesuai total belanja.</div>
+
+    <!-- BANK SECTION -->
+    <div class="section-title">
+        <i class="fas fa-skull-crossbones"></i> Bank Dunia (Bank)
+    </div>
+    <div class="grid-payment">
+        <!-- BCA -->
+        <div class="payment-card" style="opacity:0.8">
+            <div class="card-header">
+                <i class="fas fa-university" style="color:#015cae;"></i>
+                <h3>BCA</h3>
+            </div>
+            <div class="account-number" style="justify-content:center; background:#d8c394;">🏴‍☠️ Coming soon</div>
+            <span class="badge-coming"><i class="far fa-hourglass"></i> Dalam pelayaran</span>
+        </div>
+        <!-- BRI -->
+        <div class="payment-card" style="opacity:0.8">
+            <div class="card-header">
+                <i class="fas fa-university" style="color:#00529c;"></i>
+                <h3>BRI</h3>
+            </div>
+            <div class="account-number" style="justify-content:center; background:#d8c394;">🏴‍☠️ Coming soon</div>
+            <span class="badge-coming"><i class="far fa-hourglass"></i> Dalam pelayaran</span>
+        </div>
+        <!-- SEABANK -->
+        <div class="payment-card" style="opacity:0.8">
+            <div class="card-header">
+                <i class="fas fa-water" style="color:#0a7e8c;"></i>
+                <h3>SEABANK</h3>
+            </div>
+            <div class="account-number" style="justify-content:center; background:#d8c394;">🏴‍☠️ Coming soon</div>
+            <span class="badge-coming"><i class="far fa-hourglass"></i> Dalam pelayaran</span>
+        </div>
+        <!-- BANK JAGO (aktif) dengan nama baru -->
+        <div class="payment-card">
+            <div class="card-header">
+                <i class="fas fa-piggy-bank" style="color:#f59e0b;"></i>
+                <h3>BANK JAGO</h3>
+            </div>
+            <div class="account-number">
+                <span>5053 0250 4604</span>
+                <button class="copy-btn" onclick="copyText('505302504604', event)" title="Salin nomor rekening"><i class="far fa-copy"></i></button>
+            </div>
+            <div class="account-name">
+                <i class="fas fa-user-secret"></i> a.n. Muh. ZxxxxN Axxxxxto
+            </div>
+            <span class="badge-ready"><i class="fas fa-check"></i> Siap</span>
+        </div>
+    </div>
+
+    <!-- E-WALLET SECTION -->
+    <div class="section-title">
+        <i class="fas fa-coin-bill"></i> Dompet Bajak Laut (E-Wallet)
+    </div>
+    <div class="grid-payment">
+        <!-- DANA (aktif) dengan nama baru -->
+        <div class="payment-card">
+            <div class="card-header">
+                <i class="fas fa-mobile-alt" style="color:#0088cc;"></i>
+                <h3>DANA</h3>
+            </div>
+            <div class="account-number">
+                <span>0812 2220 6405</span>
+                <button class="copy-btn" onclick="copyText('081222206405', event)" title="Salin nomor DANA"><i class="far fa-copy"></i></button>
+            </div>
+            <div class="account-name">
+                <i class="fas fa-user-astronaut"></i> a.n. Muh. ZxxxxN Axxxxxto
+            </div>
+            <span class="badge-ready"><i class="fas fa-check"></i> Siap</span>
+        </div>
+        <!-- OVO -->
+        <div class="payment-card" style="opacity:0.8">
+            <div class="card-header">
+                <i class="fas fa-mobile-alt" style="color:#5e17eb;"></i>
+                <h3>OVO</h3>
+            </div>
+            <div class="account-number" style="justify-content:center; background:#d8c394;">🏴‍☠️ Coming soon</div>
+            <span class="badge-coming"><i class="far fa-hourglass"></i> Dalam pelayaran</span>
+        </div>
+        <!-- GOPAY -->
+        <div class="payment-card" style="opacity:0.8">
+            <div class="card-header">
+                <i class="fas fa-mobile-alt" style="color:#00aa5b;"></i>
+                <h3>GOPAY</h3>
+            </div>
+            <div class="account-number" style="justify-content:center; background:#d8c394;">🏴‍☠️ Coming soon</div>
+            <span class="badge-coming"><i class="far fa-hourglass"></i> Dalam pelayaran</span>
+        </div>
+        <!-- SHOPEEPAY -->
+        <div class="payment-card" style="opacity:0.8">
+            <div class="card-header">
+                <i class="fas fa-shopping-bag" style="color:#ee4d2d;"></i>
+                <h3>SHOPEEPAY</h3>
+            </div>
+            <div class="account-number" style="justify-content:center; background:#d8c394;">🏴‍☠️ Coming soon</div>
+            <span class="badge-coming"><i class="far fa-hourglass"></i> Dalam pelayaran</span>
+        </div>
+    </div>
+
+    <!-- QRIS SECTION -->
+    <div class="section-title">
+        <i class="fas fa-qrcode"></i> Peta Harta Karun (QRIS)
+    </div>
+    <div class="qris-area" onclick="openQRISModal()">
+        <div class="qris-left">
+            <img src="https://img2.pixhost.to/images/5902/697650452_ochobot.jpg" alt="QRIS All Payment" id="qris-thumb" onerror="this.src='https://via.placeholder.com/300x300?text=QRIS'">
+        </div>
+        <div class="qris-right">
+            <h3>☠️ QRIS All Payment</h3>
+            <p>Scan pakai DANA, OVO, GoPay, ShopeePay, atau mobile banking.</p>
+            <span class="click-hint"><i class="fas fa-hand-pointer"></i> Klik gambar untuk perbesar & download</span>
+        </div>
+    </div>
+
+    <!-- NOTE PENTING -->
+    <div class="note-box">
+        <p><i class="fas fa-skull"></i> Harap bayar sesuai <strong>total belanja</strong> (jangan kurang atau lebih, nanti kena kutukan Buggy!).</p>
+        <p><i class="fas fa-camera-retro"></i> Simpan bukti transfer (screenshot) untuk konfirmasi ke admin.</p>
+        <p><i class="fas fa-paper-plane"></i> Segera hubungi admin via WhatsApp setelah transfer.</p>
+        <p style="margin-top:0.8rem;"><i class="fas fa-copy"></i> Klik ikon <i class="far fa-copy"></i> untuk menyalin nomor.</p>
+    </div>
+
+    <div class="footer-note">
+        <i class="fas fa-ship"></i> King of Pirates • Monkey D. Luffy <i class="fas fa-ship"></i>
+    </div>
+</div>
+
+<!-- MODAL QRIS -->
+<div id="qrisModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeQRISModal()">&times;</span>
+        <img src="https://img2.pixhost.to/images/5902/697650452_ochobot.jpg" alt="QRIS Besar" id="modal-qris-img" onerror="this.src='https://via.placeholder.com/500x500?text=QRIS'">
+        <div class="modal-buttons">
+            <button onclick="downloadQRIS()"><i class="fas fa-download"></i> Download</button>
+            <a href="#" id="download-link" download="qris_luffy.png" style="display:none;">download</a>
+            <button onclick="closeQRISModal()"><i class="fas fa-times"></i> Tutup</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function copyText(text, event) {
+        navigator.clipboard.writeText(text).then(() => {
+            const btn = event.currentTarget;
+            const originalIcon = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check" style="color:#22c55e;"></i>';
+            setTimeout(() => {
+                btn.innerHTML = originalIcon;
+            }, 1500);
+        }).catch(err => {
+            alert('Gagal menyalin: ' + text);
+        });
+    }
+
+    const modal = document.getElementById('qrisModal');
+    const modalImg = document.getElementById('modal-qris-img');
+    const downloadLink = document.getElementById('download-link');
+
+    function openQRISModal() {
+        modal.style.display = 'flex';
+        const qrisSrc = document.getElementById('qris-thumb').src;
+        modalImg.src = qrisSrc;
+        downloadLink.href = qrisSrc;
+    }
+
+    function closeQRISModal() {
+        modal.style.display = 'none';
+    }
+
+    function downloadQRIS() {
+        downloadLink.click();
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            closeQRISModal();
+        }
+    }
+</script>
+</body>
+</html>
